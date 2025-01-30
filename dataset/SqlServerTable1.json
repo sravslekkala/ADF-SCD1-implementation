@@ -1,0 +1,75 @@
+{
+	"name": "SqlServerTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer_link",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "BranchId",
+				"type": "varchar"
+			},
+			{
+				"name": "Dealer_Id",
+				"type": "varchar"
+			},
+			{
+				"name": "Model_Id",
+				"type": "varchar"
+			},
+			{
+				"name": "Revenue",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "unitssold",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Date_id",
+				"type": "varchar"
+			},
+			{
+				"name": "Day",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Month",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Year",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Branch_name",
+				"type": "varchar"
+			},
+			{
+				"name": "Dealer_nane",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,81 @@
+{
+	"name": "github_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Http_github",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"load_flag": {
+				"type": "string",
+				"defaultValue": "SalesData.csv"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "anshlambagit/Azure-DE-Project-Resources/refs/heads/main/Raw%20Data/@{dataset().load_flag}",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Branch_ID",
+				"type": "String"
+			},
+			{
+				"name": "Dealer_ID",
+				"type": "String"
+			},
+			{
+				"name": "Model_ID",
+				"type": "String"
+			},
+			{
+				"name": "Revenue",
+				"type": "String"
+			},
+			{
+				"name": "Units_Sold",
+				"type": "String"
+			},
+			{
+				"name": "Date_ID",
+				"type": "String"
+			},
+			{
+				"name": "Day",
+				"type": "String"
+			},
+			{
+				"name": "Month",
+				"type": "String"
+			},
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "BranchName",
+				"type": "String"
+			},
+			{
+				"name": "DealerName",
+				"type": "String"
+			},
+			{
+				"name": "Product_Name",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

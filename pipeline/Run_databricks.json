@@ -1,0 +1,159 @@
+{
+	"name": "Run_databricks",
+	"properties": {
+		"activities": [
+			{
+				"name": "DB_prep",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "If_initial_run",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/cars-project/db_prep"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_ls",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Ingest_silver",
+				"type": "DatabricksNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "DB_prep",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "If_initial_run",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/cars-project/Ingest_silver",
+					"baseParameters": {
+						"ingest_date": {
+							"value": "@pipeline().parameters.ingest_date",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_ls",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Ingest_gold",
+				"type": "DatabricksNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "Ingest_silver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/cars-project/Ingest_gold_latest",
+					"baseParameters": {
+						"ingest_date": {
+							"value": "@pipeline().parameters.ingest_date",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_ls",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Reset_run_id",
+				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "Ingest_gold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "run_count",
+					"value": 1
+				}
+			},
+			{
+				"name": "If_initial_run",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('run_count'), 0)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"ingest_date": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"run_count": {
+				"type": "Integer",
+				"defaultValue": 0
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-01-28T19:18:28Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "carsprojectdf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "dfeed8cb-fca1-4148-949c-f1ce26411037",
+		"tenantId": "2195ff01-06f1-442c-a3ff-bd91739e9eee"
+	}
+}
