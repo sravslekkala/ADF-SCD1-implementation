@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "carsprojectdf"
+		},
+		"AzureDataLakeStorage_linkservice_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_ls_accountKey": {
+			"value": ""
+		},
+		"SqlServer_link_password": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_linkservice_properties_typeProperties_url": {
+			"value": "https://carprojectdl.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage_ls_properties_typeProperties_url": {
+			"value": "https://carprojectdl.dfs.core.windows.net/"
+		},
+		"AzureDatabricks_ls_properties_typeProperties_existingClusterId": {
+			"value": "0128-184833-2s1ooom1"
+		},
+		"Http_github_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/"
+		},
+		"SqlServer_link_properties_typeProperties_server": {
+			"value": "tcp:carsalessource.database.windows.net,1433"
+		},
+		"SqlServer_link_properties_typeProperties_database": {
+			"value": "carprojectingest"
+		},
+		"SqlServer_link_properties_typeProperties_userName": {
+			"value": "adminsravs"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
